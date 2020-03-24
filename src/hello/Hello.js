@@ -6,8 +6,11 @@ class Hello extends Component {
     render(){
         var nom = this.props.nom;
         var prenom = this.props.prenom;
+        var age = this.props.age;
 
-        return <h1>Hello à {prenom} {nom}</h1>;
+        return <div className="Hello">
+                    <h1>Hello à {prenom} {nom} à {age} ans</h1>
+                </div>;
     }
 }
 

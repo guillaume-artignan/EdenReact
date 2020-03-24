@@ -4,7 +4,10 @@ import './Hello.css';
 class Hello extends Component {
     
     render(){
-        return <h1>Hello tout le monde</h1>;
+        var nom = this.props.nom;
+        var prenom = this.props.prenom;
+
+        return <h1>Hello à {prenom} {nom}</h1>;
     }
 }
 

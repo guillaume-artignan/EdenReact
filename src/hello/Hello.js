@@ -6,17 +6,25 @@ import './Hello.css';
 
 class Hello extends Component {
     
-    hello(){
-        alert("Hello à "+this.props.prenom+" "+this.props.nom+" à "+this.props.age+" ans");
+    constructor(){
+        super();
+        this.state = {color : "black", compteur : 0};
+    }
+
+    compte(){
+        this.setState({compteur : this.state.compteur+1});
     }
 
     render(){
         var nom = this.props.nom;
         var prenom = this.props.prenom;
         var age = this.props.age;
-        
-        return <div onClick={()=>this.hello()} className="Hello">
-                    <h1>Hello à {prenom} {nom} à {age} ans</h1>
+
+        var style = {};
+        style.color = this.state.couleur;
+      
+        return <div onClick={()=>this.compte()} className="Hello">
+                    <h1 style={style}>Hello à {prenom} {nom} à {age} ans {this.state.compteur}</h1>
                 </div>;
     }
 }

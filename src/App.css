@@ -1,5 +1,10 @@
 .App {
-  
+  display : flex;
+  flex-wrap : wrap;
+  justify-content: space-around;
 }
 
-
+.Vignette{
+    width : 45% !important;
+  
+  }

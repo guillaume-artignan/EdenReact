@@ -5,7 +5,7 @@ class Vignette extends Component {
     
     render(){
         var style = {backgroundImage: "url('"+this.props.image+"')"}
-        return <div className="Vignette">
+        return <div onClick={()=>this.props.selectionEvent(this.props)} className="Vignette">
                     <div style={style} className="image" ></div>
                     <div className="description">
                         <h2><b>Nom :</b> {this.props.nom}</h2>

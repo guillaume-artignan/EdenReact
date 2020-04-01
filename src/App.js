@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import logo from './logo.svg';
+import sablier from './sablier.gif';
+
 import './App.css';
 import Hello from './hello/Hello'
 import Manga from './manga/Manga'
@@ -11,9 +13,33 @@ class App extends Component {
     super();
     this.state = {};
     
+    
+  }
+
+  donneesChargees(donnees){
+    donnees.forEach(d => {
+      d.active = false;
+    });
+    this.setState({"tab" : donnees});
+  }
+
+  componentDidMount(){
+    fetch("http://92.222.69.104/dragon/ball")
+      .then((d)=>d.json())
+      .then((data)=>this.donneesChargees(data));
   }
 
   selectionVignette(event){
+
+    this.state.tab.forEach(d=>{
+      if(event.nom==d.nom)
+        d.active=true;
+      else 
+        d.active=false;
+    })
+
+   
+    
     this.setState({"currentVignette":event});
 
   }
@@ -22,12 +48,11 @@ class App extends Component {
   render() {
 
     
-    var tab = [{	"nom":"Son Goku",     	"origine":"Saiyan", "nomOrigine":"孫悟空",	"description":"", "logo":"https://i.pinimg.com/originals/3b/7a/9b/3b7a9b76d75738cb83dd8e984a0fb44a.png"}, {	"nom":"Son Gohan",      	"origine":"Saiyan et Terrien", "nomOrigine":"孫悟飯",	"description":"", "logo":"https://vignette.wikia.nocookie.net/dragonball/images/b/bc/Adult_gohan.png/revision/latest?cb=20170601162208&path-prefix=fr"}, {	"nom":"Vegeta",		"origine":"Saiyan", "nomOrigine":"ベジータ",	"description":"", "logo":"http://img3.wikia.nocookie.net/__cb20140721213154/dragonballfanon/es/images/b/be/Vegeta_by_bardocksonic-d606hr0.png"}, {	"nom":"Piccolo",		"origine":"Namek", "nomOrigine":"ピッコロ",	"description":"", "logo":"https://www.nautiljon.com/images/perso/00/19/piccolo_2091.jpg" }];
-
-    var detail = <div class="detail"></div>;
+    
+    var detail = <div className="detail"></div>;
 
     if (this.state && this.state.currentVignette){
-      detail =  <div class="detail">
+      detail =  <div className="detail">
                       <h1>Détail sur {this.state.currentVignette.nom}</h1>
                       <div >
                       <h2><b>Nom : </b>{this.state.currentVignette.nom}</h2>
@@ -38,20 +63,24 @@ class App extends Component {
                     </div>;
     }
       
-
-    return (
-      <div className="App">
+    if (this.state.tab){
+      console.log(this.state.tab);
+      return (
+        <div className="App">
+        
+        {this.state.tab.map((item, i) => <Vignette key={i} active={item.active} nom={item.nom} 
+                      nomOrigine={item.nomOrigine} 
+                      origine={item.origine}
+                      image={item.logo}
+                      selectionEvent={this.selectionVignette.bind(this)}></Vignette> )}
           
-      {tab.map((item, i) => <Vignette nom={item.nom} 
-                     nomOrigine={item.nomOrigine} 
-                     origine={item.origine}
-                     image={item.logo}
-                     selectionEvent={this.selectionVignette.bind(this)}></Vignette> )}
-         
-              {detail}
+                {detail}
 
-      </div>
-    );    
+        </div>
+      );  
+    }else {
+        return <div className="Progress"><img src={sablier}></img></div>;
+    }  
   }
 
 }

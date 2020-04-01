@@ -3,9 +3,20 @@ import './Vignette.css';
 
 class Vignette extends Component {
     
+    constructor(props){
+        super(props);
+        
+    }
+
     render(){
+
         var style = {backgroundImage: "url('"+this.props.image+"')"}
-        return <div onClick={()=>this.props.selectionEvent(this.props)} className="Vignette">
+        var style2 = {};
+        this.active = this.props.active ? this.props.active : false;
+        if (this.active)
+            style2 = {backgroundColor : "lightgreen"};
+
+        return <div style={style2} onClick={()=>this.props.selectionEvent(this.props)} className="Vignette">
                     <div style={style} className="image" ></div>
                     <div className="description">
                         <h2><b>Nom :</b> {this.props.nom}</h2>

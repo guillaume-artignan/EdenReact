@@ -44,6 +44,12 @@ class App extends Component {
 
   }
   
+  setNom(nom){
+    var copy = JSON.parse(JSON.stringify(this.state.currentVignette));
+    copy.nom = nom;
+    console.log(copy);
+    this.setState({"currentVignette" : copy});
+  }
 
   render() {
 
@@ -60,8 +66,16 @@ class App extends Component {
                       <h2><b>Origine: </b>{this.state.currentVignette.origine}</h2>
                       <img src={this.state.currentVignette.image}></img>
                     </div>
-                    </div>;
+                  </div>;
+
+      var modification = <div> <h1>Modification</h1>
+      <input onChange={(e) => this.setNom(e.target.value)} id="nom" value={this.state.currentVignette.nom}></input>
+      <input id="origine"></input>
+      <input id="nomOrigine"></input>
+      </div>;
     }
+
+
       
     if (this.state.tab){
       console.log(this.state.tab);
@@ -75,7 +89,7 @@ class App extends Component {
                       selectionEvent={this.selectionVignette.bind(this)}></Vignette> )}
           
                 {detail}
-
+                {modification}
         </div>
       );  
     }else {
